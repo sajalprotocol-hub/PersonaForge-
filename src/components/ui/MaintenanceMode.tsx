@@ -93,6 +93,18 @@ export const MaintenanceMode: React.FC<MaintenanceModeProps> = ({ targetDate }) 
                     <TimeUnit value={timeLeft.seconds} label="Secs" />
                 </motion.div>
 
+                <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 }}
+                    className="pt-4"
+                >
+                    <Link href="/" className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 text-white font-bold transition-all hover:scale-105 active:scale-95 group">
+                        <ArrowRight className="w-4 h-4 rotate-180 group-hover:-translate-x-1 transition-transform" />
+                        Return to Hub
+                    </Link>
+                </motion.div>
+
                 {/* Footer Actions */}
                 <motion.div
                     initial={{ opacity: 0 }}

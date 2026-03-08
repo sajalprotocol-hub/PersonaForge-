@@ -11,16 +11,16 @@ interface MaintenanceGuardProps {
 
 // Configuration
 const MAINTENANCE_MODE = true; // Set to false to disable globally
-const MAINTENANCE_END_DATE = '2026-03-10T00:00:00Z'; // 24 hours from now (approx)
+const MAINTENANCE_END_DATE = '2026-03-17T00:00:00+05:30';
 
 export const MaintenanceGuard: React.FC<MaintenanceGuardProps> = ({ children }) => {
     const { isAdmin, loading, authReady } = useAuth();
     const pathname = usePathname();
 
-    // Paths that are ALWAYS accessible (so admins can login/signup)
+    // Paths that are ALWAYS accessible (landing page, login/signup)
     const isPublicPath = useMemo(() => {
-        const publicPaths = ['/login', '/signup', '/api/auth'];
-        return publicPaths.some(path => pathname?.startsWith(path));
+        const publicPaths = ['/', '/login', '/signup', '/api/auth'];
+        return publicPaths.some(path => pathname === path || pathname?.startsWith('/api/auth'));
     }, [pathname]);
 
     // If maintenance is off, or user is an admin, or it's a public path, show the content
