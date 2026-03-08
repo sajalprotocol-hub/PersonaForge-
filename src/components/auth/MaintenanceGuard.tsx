@@ -14,8 +14,12 @@ const MAINTENANCE_MODE = true; // Set to false to disable globally
 const MAINTENANCE_END_DATE = '2026-03-17T00:00:00+05:30';
 
 export const MaintenanceGuard: React.FC<MaintenanceGuardProps> = ({ children }) => {
-    const { isAdmin, loading, authReady } = useAuth();
+    const { user, isAdmin, loading, authReady } = useAuth();
     const pathname = usePathname();
+
+    // HARDCODED ADMIN BYPASS (to help user with Firestore issues)
+    const isHardcodedAdmin = user?.email === 'forge-admin-x92@personaforge.ai';
+
 
     // Paths that are ALWAYS accessible (landing page, login/signup)
     const isPublicPath = useMemo(() => {
@@ -24,9 +28,10 @@ export const MaintenanceGuard: React.FC<MaintenanceGuardProps> = ({ children }) 
     }, [pathname]);
 
     // If maintenance is off, or user is an admin, or it's a public path, show the content
-    if (!MAINTENANCE_MODE || isAdmin || isPublicPath) {
+    if (!MAINTENANCE_MODE || isAdmin || isHardcodedAdmin || isPublicPath) {
         return <>{children}</>;
     }
+
 
     // While auth is still determining if user is an admin, show nothing/loading to prevent flicker
     if (!authReady || loading) {
