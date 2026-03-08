@@ -6,6 +6,7 @@ import { ThemeProvider } from '@/context/ThemeContext';
 import { AIProvider } from '@/context/AIContext';
 import { Toaster } from 'react-hot-toast';
 import dynamic from 'next/dynamic';
+import { MaintenanceGuard } from '@/components/auth/MaintenanceGuard';
 import { JsonLdSchema, GoogleAnalytics } from '@/components/automation/Analytics';
 
 // Lazy-load heavy visual components — they are NOT needed for first paint
@@ -53,9 +54,11 @@ export default function RootLayout({
                 <ThemeProvider>
                     <AIProvider>
                         <AuthProvider>
-                            <CustomCursor />
-                            <ScrollProgress />
-                            {children}
+                            <MaintenanceGuard>
+                                <CustomCursor />
+                                <ScrollProgress />
+                                {children}
+                            </MaintenanceGuard>
                             <Toaster
                                 position="top-center"
                                 toastOptions={{
