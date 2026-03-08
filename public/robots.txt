@@ -1,0 +1,10 @@
+# PersonaForge Robots.txt
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /settings/
+
+# Sitemaps
+Sitemap: https://personaforge.ai/sitemap.xml

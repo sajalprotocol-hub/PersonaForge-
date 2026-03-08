@@ -1,0 +1,12 @@
+node_modules/
+.next/
+.env.local
+.env
+.env.*.local
+*.tsbuildinfo
+next-env.d.ts
+build_output.txt
+ts_errors.txt
+audit_report.md
+list-users.mjs
+.vercel

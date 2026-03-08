@@ -1,0 +1,5 @@
+# Social Media Automation Requirements
+instagrapi  # For Instagram API interaction
+python-dotenv  # For loading environment variables
+Pillow  # For basic image processing
+moviepy  # For high-level video editing (requires FFmpeg)
