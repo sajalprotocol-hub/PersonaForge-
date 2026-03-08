@@ -90,19 +90,14 @@ export default function OnboardingPage() {
         const data: OnboardingData = { basicInfo, education, experience, skills, careerGoal };
 
         try {
-            // Trigger save
-            const savePromise = saveOnboardingData(user.uid, data);
+            // Wait for the Firestore save to complete first
+            await saveOnboardingData(user.uid, data);
 
-            // Show optimistic success and navigate immediately
-            toast.success('Profile complete! Welcome to PersonaForge.');
-
-            // Refresh profile in context so dashboard updates
+            // Refresh profile in context so dashboard shows updated state
             refreshProfile({ onboardingComplete: true });
 
+            toast.success('Profile complete! Welcome to PersonaForge.');
             router.push('/dashboard');
-
-            // Wait for save in background (if needed)
-            await savePromise;
         } catch (err) {
             console.error('Onboarding save failed:', err);
             setLoading(false);
