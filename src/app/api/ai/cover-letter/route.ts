@@ -8,10 +8,6 @@ export async function POST(req: NextRequest) {
     const authResult = await verifyAuth(req);
     if (isAuthError(authResult)) return authResult;
 
-    // Cover letter is premium-only: requires monthly/weekly tier (or admin)
-    const subscriptionCheck = requireSubscription(authResult, ['monthly', 'weekly']);
-    if (subscriptionCheck) return subscriptionCheck;
-
     // Rate limit: admins get 100/min, others get 10/min
     const maxReq = authResult.isAdmin ? 100 : 10;
     const rateCheck = await checkRateLimit(`ai:${authResult.uid}`, { maxRequests: maxReq, windowSeconds: 60 });

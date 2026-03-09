@@ -15,7 +15,7 @@ import { WelcomeNudge } from '@/components/automation/WelcomeNudge';
 const QUICK_ACTIONS = [
     { href: '/resume-builder', icon: FileText, title: 'Build Resume', desc: 'Create an AI-optimized resume', color: 'from-brand-500 to-brand-600' },
     { href: '/jd-match', icon: Target, title: 'Match JD', desc: 'Analyze job description fit', color: 'from-green-500 to-emerald-600' },
-    { href: '/cover-letter', icon: Mail, title: 'Cover Letter', desc: 'Generate tailored letters', color: 'from-purple-500 to-violet-600', premium: true },
+    { href: '/cover-letter', icon: Mail, title: 'Cover Letter', desc: 'Generate tailored letters', color: 'from-purple-500 to-violet-600' },
 ];
 
 const containerVariants = {
@@ -118,11 +118,6 @@ export default function DashboardPage() {
                             <TiltCard className="h-full">
                                 <Link href={action.href}
                                     className="glass-card p-5 glass-card-hover group relative overflow-hidden block h-full shimmer-sweep">
-                                    {action.premium && (
-                                        <div className="absolute top-3 right-3">
-                                            <Crown className="w-4 h-4 text-yellow-500" />
-                                        </div>
-                                    )}
                                     <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${action.color} flex items-center justify-center mb-4 group-hover:rotate-6 transition-all duration-300 shadow-lg`}>
                                         <action.icon className="w-6 h-6 text-white" />
                                     </div>

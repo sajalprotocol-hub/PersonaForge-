@@ -22,7 +22,7 @@ const NAV_ITEMS = [
     { href: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
     { href: '/resume-builder', icon: FileText, label: 'Resume Builder' },
     { href: '/jd-match', icon: Target, label: 'JD Match' },
-    { href: '/cover-letter', icon: Mail, label: 'Cover Letter', premium: true },
+    { href: '/cover-letter', icon: Mail, label: 'Cover Letter' },
     { href: '/settings', icon: Settings, label: 'Settings' },
     { href: '/admin', icon: Shield, label: 'Admin Panel', adminOnly: true },
 ];
@@ -122,7 +122,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                                 >
                                     <item.icon className={`w-5 h-5 shrink-0 ${isActive ? 'text-white' : 'group-hover:text-purple-400'}`} />
                                     {sidebarOpen && <span className="flex-1 whitespace-nowrap">{item.label}</span>}
-                                    {sidebarOpen && item.premium && !isAdmin && <Crown className="w-3.5 h-3.5 text-yellow-500" />}
                                 </Link>
                             );
                         })}
@@ -198,7 +197,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                                                     }`}>
                                                 <item.icon className="w-6 h-6" />
                                                 {item.label}
-                                                {item.premium && !isAdmin && <Crown className="w-4 h-4 text-yellow-500 ml-auto" />}
                                             </Link>
                                         );
                                     })}

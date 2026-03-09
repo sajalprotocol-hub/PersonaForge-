@@ -308,470 +308,470 @@ export default function ResumeBuilderPage() {
 
     const previewFont = layout === 'modern' || layout === 'minimal' ? 'Inter, ui-sans-serif, system-ui' : 'Georgia, serif';
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-   â–ˆâ–ˆ  R E N D E R
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+       â–ˆâ–ˆ  R E N D E R
+       â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
-return (
-    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-        className="max-w-[1440px] mx-auto relative flex flex-col h-[calc(100vh-120px)]">
+    return (
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+            className="max-w-[1440px] mx-auto relative flex flex-col h-[calc(100vh-120px)]">
 
-        <AnimatePresence>
-            {(generating || loadingSection) && <WarpLoading message="Synthesizing Career Matrix..." />}
-        </AnimatePresence>
+            <AnimatePresence>
+                {(generating || loadingSection) && <WarpLoading message="Synthesizing Career Matrix..." />}
+            </AnimatePresence>
 
-        {/* â”€â”€ Header â”€â”€ */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-            <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-purple-500/20">
-                    <FileText className="w-5 h-5 text-white" />
+            {/* â”€â”€ Header â”€â”€ */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-purple-500/20">
+                        <FileText className="w-5 h-5 text-white" />
+                    </div>
+                    <input value={resumeTitle} onChange={e => setResumeTitle(e.target.value)}
+                        className="text-2xl font-display font-black bg-transparent border-none outline-none focus:ring-0 w-auto nebula-text" placeholder="Resume Title" />
                 </div>
-                <input value={resumeTitle} onChange={e => setResumeTitle(e.target.value)}
-                    className="text-2xl font-display font-black bg-transparent border-none outline-none focus:ring-0 w-auto nebula-text" placeholder="Resume Title" />
+                <div className="flex items-center gap-2 flex-wrap">
+                    <button onClick={() => setShowResumeList(!showResumeList)}
+                        className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-bold text-gray-400 hover:text-white hover:bg-white/5 border border-white/5 transition-all">
+                        <FolderOpen className="w-4 h-4" /> My Resumes
+                    </button>
+                    <button onClick={newResume}
+                        className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-bold text-gray-400 hover:text-white hover:bg-white/5 border border-white/5 transition-all">
+                        <Plus className="w-4 h-4" /> New
+                    </button>
+                    <button onClick={generateAll} disabled={generating}
+                        className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-bold bg-purple-600 hover:bg-purple-500 text-white transition-all shadow-lg shadow-purple-500/20 disabled:opacity-50">
+                        {generating ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />} Generate All
+                    </button>
+                    <button onClick={downloadPDF}
+                        className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-bold bg-white/5 hover:bg-white/10 border border-white/10 text-white transition-all">
+                        <Download className="w-4 h-4" /> PDF
+                    </button>
+                </div>
             </div>
-            <div className="flex items-center gap-2 flex-wrap">
-                <button onClick={() => setShowResumeList(!showResumeList)}
-                    className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-bold text-gray-400 hover:text-white hover:bg-white/5 border border-white/5 transition-all">
-                    <FolderOpen className="w-4 h-4" /> My Resumes
-                </button>
-                <button onClick={newResume}
-                    className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-bold text-gray-400 hover:text-white hover:bg-white/5 border border-white/5 transition-all">
-                    <Plus className="w-4 h-4" /> New
-                </button>
-                <button onClick={generateAll} disabled={generating}
-                    className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-bold bg-purple-600 hover:bg-purple-500 text-white transition-all shadow-lg shadow-purple-500/20 disabled:opacity-50">
-                    {generating ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />} Generate All
-                </button>
-                <button onClick={downloadPDF}
-                    className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-bold bg-white/5 hover:bg-white/10 border border-white/10 text-white transition-all">
-                    <Download className="w-4 h-4" /> PDF
-                </button>
-            </div>
-        </div>
 
-        {/* â”€â”€ Saved Resumes Dropdown â”€â”€ */}
-        <AnimatePresence>
-            {showResumeList && (
-                <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}
-                    className="glass-card p-4 mb-4 overflow-hidden">
-                    <h3 className="font-display font-bold text-sm mb-3 text-gray-300">Saved Resumes</h3>
-                    {loadingResumes ? (
-                        <div className="flex justify-center p-6"><Loader2 className="w-6 h-6 animate-spin text-purple-500" /></div>
-                    ) : savedResumes.length === 0 ? (
-                        <p className="text-sm text-gray-500 text-center py-4">No saved resumes yet. Create your first one!</p>
-                    ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                            {savedResumes.map(r => (
-                                <div key={r.id} className="p-3 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] flex items-center justify-between transition-all group">
-                                    <button onClick={() => loadResume(r)} className="text-left flex-1">
-                                        <p className="font-medium text-sm text-white">{r.title || 'Untitled'}</p>
-                                        {r.updatedAt && <p className="text-[10px] text-gray-500 mt-0.5">{new Date(r.updatedAt.seconds * 1000).toLocaleDateString()}</p>}
-                                    </button>
-                                    <button onClick={() => deleteResume(r.id)} className="p-1.5 text-gray-600 hover:text-red-400 transition-colors opacity-0 group-hover:opacity-100">
-                                        <Trash2 className="w-4 h-4" />
-                                    </button>
-                                </div>
-                            ))}
+            {/* â”€â”€ Saved Resumes Dropdown â”€â”€ */}
+            <AnimatePresence>
+                {showResumeList && (
+                    <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}
+                        className="glass-card p-4 mb-4 overflow-hidden">
+                        <h3 className="font-display font-bold text-sm mb-3 text-gray-300">Saved Resumes</h3>
+                        {loadingResumes ? (
+                            <div className="flex justify-center p-6"><Loader2 className="w-6 h-6 animate-spin text-purple-500" /></div>
+                        ) : savedResumes.length === 0 ? (
+                            <p className="text-sm text-gray-500 text-center py-4">No saved resumes yet. Create your first one!</p>
+                        ) : (
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                                {savedResumes.map(r => (
+                                    <div key={r.id} className="p-3 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] flex items-center justify-between transition-all group">
+                                        <button onClick={() => loadResume(r)} className="text-left flex-1">
+                                            <p className="font-medium text-sm text-white">{r.title || 'Untitled'}</p>
+                                            {r.updatedAt && <p className="text-[10px] text-gray-500 mt-0.5">{new Date(r.updatedAt.seconds * 1000).toLocaleDateString()}</p>}
+                                        </button>
+                                        <button onClick={() => deleteResume(r.id)} className="p-1.5 text-gray-600 hover:text-red-400 transition-colors opacity-0 group-hover:opacity-100">
+                                            <Trash2 className="w-4 h-4" />
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* â•â•â•â• MAIN SPLIT PANE â•â•â•â• */}
+            <div className="grid lg:grid-cols-2 gap-6 items-start flex-1 min-h-0 relative overflow-hidden">
+
+                {/* â”€â”€ PREVIEW (LEFT) â”€â”€ */}
+                <div className="space-y-3 order-2 lg:order-1 h-full flex flex-col overflow-hidden">
+                    <div className="flex items-center justify-between px-1">
+                        <div className="flex items-center gap-2">
+                            <Eye className="w-4 h-4 text-purple-400" />
+                            <h2 className="font-display font-bold text-xs uppercase tracking-[0.2em] text-purple-400">Live Preview</h2>
                         </div>
-                    )}
-                </motion.div>
-            )}
-        </AnimatePresence>
-
-        {/* â•â•â•â• MAIN SPLIT PANE â•â•â•â• */}
-        <div className="grid lg:grid-cols-2 gap-6 items-start flex-1 min-h-0 relative overflow-hidden">
-
-            {/* â”€â”€ PREVIEW (LEFT) â”€â”€ */}
-            <div className="space-y-3 order-2 lg:order-1 h-full flex flex-col overflow-hidden">
-                <div className="flex items-center justify-between px-1">
-                    <div className="flex items-center gap-2">
-                        <Eye className="w-4 h-4 text-purple-400" />
-                        <h2 className="font-display font-bold text-xs uppercase tracking-[0.2em] text-purple-400">Live Preview</h2>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <svg width="28" height="28" viewBox="0 0 44 44">
-                            <circle cx="22" cy="22" r="18" fill="none" stroke="currentColor" strokeWidth="3" className="text-white/5" />
-                            {atsScore > 0 && <motion.circle cx="22" cy="22" r="18" fill="none" strokeWidth="4" strokeLinecap="round" className={scoreBg}
-                                initial={{ strokeDasharray: "0 113" }} animate={{ strokeDasharray: `${(atsScore / 100) * 113} 113` }} transition={{ duration: 1.5 }} />}
-                        </svg>
-                        <span className={`text-xs font-black ${scoreColor}`}>{atsScore || 'â€”'}</span>
-                        <span className="text-[9px] font-bold text-gray-600 uppercase tracking-wider">ATS</span>
-                    </div>
-                </div>
-
-                <div className="glass-card flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar p-4 md:p-8 flex justify-center">
-                    <div className="origin-top scale-[0.45] sm:scale-[0.55] md:scale-[0.6] lg:scale-[0.55] xl:scale-[0.7] transition-all duration-300 w-[210mm] flex justify-center h-fit pb-32">
-                        <div ref={previewRef} style={{ fontFamily: previewFont, fontSize: layout === 'minimal' ? '10px' : '11px', width: '210mm', minHeight: '297mm', color: layout === 'minimal' ? '#333' : '#111', lineHeight: layout === 'modern' ? '1.4' : '1.5', position: 'relative' }}
-                            className="bg-white text-black p-[20mm] shadow-2xl transition-all duration-500">
-
-                            {/* Contact header */}
-                            <div className={`p-4 rounded-lg transition-all ${focusedSection === 'contact' ? 'bg-purple-50 ring-2 ring-purple-200' : ''}`}
-                                style={{ textAlign: 'center', borderBottom: layout === 'modern' ? '4px solid #7c3aed' : layout === 'executive' ? '2.5px solid #000' : 'none', paddingBottom: '12px', marginBottom: '20px' }}>
-                                <h1 style={{ fontSize: layout === 'classic' ? '32px' : layout === 'modern' ? '28px' : '24px', fontWeight: 900, margin: '0 0 5px 0', letterSpacing: '-0.03em', textTransform: 'uppercase', color: '#000' }}>
-                                    {contact.fullName || 'YOUR NAME'}
-                                </h1>
-                                <p style={{ fontSize: '10px', color: layout === 'modern' ? '#7c3aed' : '#444', fontWeight: 600, letterSpacing: layout === 'minimal' ? '0.1em' : 'normal' }}>{contactLine}</p>
-                            </div>
-
-                            {/* Summary */}
-                            {summary && (
-                                <div className={`p-4 rounded-lg transition-all mb-4 ${focusedSection === 'summary' ? 'bg-purple-50 ring-2 ring-purple-200' : ''}`}>
-                                    <h2 style={previewHeading('Summary')}>Professional Summary{layout === 'minimal' && <div className="flex-1 h-[1px] bg-gray-100" />}</h2>
-                                    <p style={{ whiteSpace: 'pre-wrap', fontSize: layout === 'minimal' ? '10.5px' : '11px' }}>{summary}</p>
-                                </div>
-                            )}
-
-                            {/* Experience */}
-                            {experience.length > 0 && (
-                                <div className={`p-4 rounded-lg transition-all mb-4 ${focusedSection === 'experience' ? 'bg-purple-50 ring-2 ring-purple-200' : ''}`}>
-                                    <h2 style={previewHeading('Experience')}>Work Experience{layout === 'minimal' && <div className="flex-1 h-[1px] bg-gray-100" />}</h2>
-                                    {experience.map(exp => (
-                                        <div key={exp.id} style={{ marginBottom: '15px' }}>
-                                            <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 800, fontSize: '13px', color: '#000' }}>
-                                                <span>{exp.title}</span><span style={{ fontSize: '11px', fontWeight: 'bold' }}>{exp.startDate} â€“ {exp.endDate}</span>
-                                            </div>
-                                            <div style={{ display: 'flex', justifyContent: 'space-between', fontStyle: 'italic', marginBottom: '6px', fontSize: '11px', color: '#333' }}>
-                                                <span>{exp.company}</span><span>{exp.location}</span>
-                                            </div>
-                                            <ul style={{ paddingLeft: '18px', margin: 0, listStyleType: layout === 'modern' ? 'square' : 'disc' }}>
-                                                {exp.bullets.map((b, i) => b && <li key={i} style={{ marginBottom: '4px', fontSize: '10.5px' }}>{b}</li>)}
-                                            </ul>
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-
-                            {/* Projects */}
-                            {projects.length > 0 && (
-                                <div className={`p-4 rounded-lg transition-all mb-4 ${focusedSection === 'projects' ? 'bg-purple-50 ring-2 ring-purple-200' : ''}`}>
-                                    <h2 style={previewHeading('Projects')}>Key Projects{layout === 'minimal' && <div className="flex-1 h-[1px] bg-gray-100" />}</h2>
-                                    {projects.map(proj => (
-                                        <div key={proj.id} style={{ marginBottom: '12px' }}>
-                                            <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 800, fontSize: '13px', color: '#000' }}>
-                                                <span>{proj.name} <span style={{ fontWeight: 400, color: '#666', fontStyle: 'italic', fontSize: '11px' }}>| {proj.technologies.join(', ')}</span></span>
-                                                <span style={{ fontSize: '11px', fontWeight: 'bold' }}>{proj.year}</span>
-                                            </div>
-                                            <ul style={{ paddingLeft: '18px', margin: '4px 0 0', listStyleType: 'disc' }}>
-                                                {proj.bullets?.map((b, i) => b?.trim() && <li key={i} style={{ marginBottom: '2px', fontSize: '10.5px' }}>{b}</li>)}
-                                            </ul>
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-
-                            {/* Education */}
-                            {education.length > 0 && (
-                                <div className={`p-4 rounded-lg transition-all mb-4 ${focusedSection === 'education' ? 'bg-purple-50 ring-2 ring-purple-200' : ''}`}>
-                                    <h2 style={previewHeading('Education')}>Education{layout === 'minimal' && <div className="flex-1 h-[1px] bg-gray-100" />}</h2>
-                                    {education.map(edu => (
-                                        <div key={edu.id} style={{ marginBottom: '10px' }}>
-                                            <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 800, fontSize: '13px', color: '#000' }}>
-                                                <span>{edu.institution}</span><span style={{ fontSize: '11px', fontWeight: 'bold' }}>{edu.year}</span>
-                                            </div>
-                                            <div style={{ display: 'flex', justifyContent: 'space-between', fontStyle: 'italic', fontSize: '11px', color: '#333' }}>
-                                                <span>{edu.degree} {edu.field && `in ${edu.field}`}</span>{edu.gpa && <span>GPA: {edu.gpa}</span>}
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-
-                            {/* Skills & Certifications */}
-                            <div style={{ display: 'grid', gridTemplateColumns: layout === 'classic' || layout === 'minimal' ? '1fr' : '1fr 1fr', gap: '20px' }}>
-                                {skills && (
-                                    <div className={`p-4 rounded-lg transition-all ${focusedSection === 'skills' ? 'bg-purple-50 ring-2 ring-purple-200' : ''}`}>
-                                        <h2 style={previewHeading('Skills')}>{layout === 'classic' ? 'Technical Skills' : 'Skills'}{layout === 'minimal' && <div className="flex-1 h-[1px] bg-gray-100" />}</h2>
-                                        {layout === 'classic' ? (
-                                            <div style={{ fontSize: '11px' }}>
-                                                {skills.split(';').map((cat, idx) => {
-                                                    const parts = cat.split(':');
-                                                    if (parts.length < 2) return <p key={idx} style={{ marginBottom: '4px' }}>{cat}</p>;
-                                                    return <p key={idx} style={{ marginBottom: '4px' }}><strong style={{ color: '#000' }}>{parts[0].trim()}:</strong> {parts.slice(1).join(':').trim()}</p>;
-                                                })}
-                                            </div>
-                                        ) : (
-                                            <p style={{ fontSize: '10.5px', lineHeight: 1.8, color: '#444' }}>{skills}</p>
-                                        )}
-                                    </div>
-                                )}
-                                {certifications && (
-                                    <div className={`p-4 rounded-lg transition-all ${focusedSection === 'certifications' ? 'bg-purple-50 ring-2 ring-purple-200' : ''}`}>
-                                        <h2 style={previewHeading('Certs')}>{layout === 'classic' ? 'Certifications & Achievements' : 'Certifications'}{layout === 'minimal' && <div className="flex-1 h-[1px] bg-gray-100" />}</h2>
-                                        {layout === 'classic' ? (
-                                            <div style={{ fontSize: '11px' }}>{certifications.split('\n').map((c, i) => <p key={i} style={{ marginBottom: '4px' }}>{c}</p>)}</div>
-                                        ) : (
-                                            <p style={{ fontSize: '10.5px', lineHeight: 1.8, color: '#444' }}>{certifications}</p>
-                                        )}
-                                    </div>
-                                )}
-                            </div>
+                        <div className="flex items-center gap-2">
+                            <svg width="28" height="28" viewBox="0 0 44 44">
+                                <circle cx="22" cy="22" r="18" fill="none" stroke="currentColor" strokeWidth="3" className="text-white/5" />
+                                {atsScore > 0 && <motion.circle cx="22" cy="22" r="18" fill="none" strokeWidth="4" strokeLinecap="round" className={scoreBg}
+                                    initial={{ strokeDasharray: "0 113" }} animate={{ strokeDasharray: `${(atsScore / 100) * 113} 113` }} transition={{ duration: 1.5 }} />}
+                            </svg>
+                            <span className={`text-xs font-black ${scoreColor}`}>{atsScore || '-'}</span>
+                            <span className="text-[9px] font-bold text-gray-600 uppercase tracking-wider">ATS</span>
                         </div>
                     </div>
-                </div>
-            </div>
 
-            {/* â”€â”€ EDITOR (RIGHT) â”€â”€ */}
-            <div className="flex flex-col h-full overflow-hidden order-1 lg:order-2">
-                {/* Progress Stepper */}
-                <div className="relative mb-5 px-1">
-                    <div className="flex items-center justify-between overflow-x-auto no-scrollbar pb-2">
-                        {STEPS.map((step, idx) => {
-                            const Icon = step.icon;
-                            const isActive = currentStep === step.id;
-                            const isCompleted = currentStep > step.id;
-                            return (
-                                <React.Fragment key={step.id}>
-                                    <button onClick={() => setCurrentStep(step.id)}
-                                        className={`flex flex-col items-center gap-1.5 min-w-[60px] transition-all relative ${isActive ? 'opacity-100 scale-105' : 'opacity-40 hover:opacity-80'}`}>
-                                        <div className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-300 ${isActive ? 'bg-purple-600 text-white shadow-lg shadow-purple-500/30' : isCompleted ? 'bg-green-500/20 text-green-400 border border-green-500/30' : 'bg-white/5 text-gray-500 border border-white/5'}`}>
-                                            <Icon className="w-4 h-4" />
-                                        </div>
-                                        <span className={`text-[9px] font-black uppercase tracking-tight whitespace-nowrap ${isActive ? 'text-purple-400' : 'text-gray-600'}`}>{step.label}</span>
-                                    </button>
-                                    {idx < STEPS.length - 1 && (
-                                        <div className="flex-1 h-[2px] min-w-[12px] mx-1 bg-white/5 self-center mb-5 relative overflow-hidden">
-                                            <motion.div initial={{ width: "0%" }} animate={{ width: isCompleted ? "100%" : "0%" }}
-                                                className="absolute inset-0 bg-gradient-to-r from-purple-600 to-indigo-500" />
+                    <div className="glass-card flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar p-4 md:p-8 flex justify-center">
+                        <div className="origin-top scale-[0.45] sm:scale-[0.55] md:scale-[0.6] lg:scale-[0.55] xl:scale-[0.7] transition-all duration-300 w-[210mm] flex justify-center h-fit pb-32">
+                            <div ref={previewRef} style={{ fontFamily: previewFont, fontSize: layout === 'minimal' ? '10px' : '11px', width: '210mm', minHeight: '297mm', color: layout === 'minimal' ? '#333' : '#111', lineHeight: layout === 'modern' ? '1.4' : '1.5', position: 'relative' }}
+                                className="bg-white text-black p-[20mm] shadow-2xl transition-all duration-500">
+
+                                {/* Contact header */}
+                                <div className={`p-4 rounded-lg transition-all ${focusedSection === 'contact' ? 'bg-purple-50 ring-2 ring-purple-200' : ''}`}
+                                    style={{ textAlign: 'center', borderBottom: layout === 'modern' ? '4px solid #7c3aed' : layout === 'executive' ? '2.5px solid #000' : 'none', paddingBottom: '12px', marginBottom: '20px' }}>
+                                    <h1 style={{ fontSize: layout === 'classic' ? '32px' : layout === 'modern' ? '28px' : '24px', fontWeight: 900, margin: '0 0 5px 0', letterSpacing: '-0.03em', textTransform: 'uppercase', color: '#000' }}>
+                                        {contact.fullName || 'YOUR NAME'}
+                                    </h1>
+                                    <p style={{ fontSize: '10px', color: layout === 'modern' ? '#7c3aed' : '#444', fontWeight: 600, letterSpacing: layout === 'minimal' ? '0.1em' : 'normal' }}>{contactLine}</p>
+                                </div>
+
+                                {/* Summary */}
+                                {summary && (
+                                    <div className={`p-4 rounded-lg transition-all mb-4 ${focusedSection === 'summary' ? 'bg-purple-50 ring-2 ring-purple-200' : ''}`}>
+                                        <h2 style={previewHeading('Summary')}>Professional Summary{layout === 'minimal' && <div className="flex-1 h-[1px] bg-gray-100" />}</h2>
+                                        <p style={{ whiteSpace: 'pre-wrap', fontSize: layout === 'minimal' ? '10.5px' : '11px' }}>{summary}</p>
+                                    </div>
+                                )}
+
+                                {/* Experience */}
+                                {experience.length > 0 && (
+                                    <div className={`p-4 rounded-lg transition-all mb-4 ${focusedSection === 'experience' ? 'bg-purple-50 ring-2 ring-purple-200' : ''}`}>
+                                        <h2 style={previewHeading('Experience')}>Work Experience{layout === 'minimal' && <div className="flex-1 h-[1px] bg-gray-100" />}</h2>
+                                        {experience.map(exp => (
+                                            <div key={exp.id} style={{ marginBottom: '15px' }}>
+                                                <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 800, fontSize: '13px', color: '#000' }}>
+                                                    <span>{exp.title}</span><span style={{ fontSize: '11px', fontWeight: 'bold' }}>{exp.startDate} â€“ {exp.endDate}</span>
+                                                </div>
+                                                <div style={{ display: 'flex', justifyContent: 'space-between', fontStyle: 'italic', marginBottom: '6px', fontSize: '11px', color: '#333' }}>
+                                                    <span>{exp.company}</span><span>{exp.location}</span>
+                                                </div>
+                                                <ul style={{ paddingLeft: '18px', margin: 0, listStyleType: layout === 'modern' ? 'square' : 'disc' }}>
+                                                    {exp.bullets.map((b, i) => b && <li key={i} style={{ marginBottom: '4px', fontSize: '10.5px' }}>{b}</li>)}
+                                                </ul>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+
+                                {/* Projects */}
+                                {projects.length > 0 && (
+                                    <div className={`p-4 rounded-lg transition-all mb-4 ${focusedSection === 'projects' ? 'bg-purple-50 ring-2 ring-purple-200' : ''}`}>
+                                        <h2 style={previewHeading('Projects')}>Key Projects{layout === 'minimal' && <div className="flex-1 h-[1px] bg-gray-100" />}</h2>
+                                        {projects.map(proj => (
+                                            <div key={proj.id} style={{ marginBottom: '12px' }}>
+                                                <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 800, fontSize: '13px', color: '#000' }}>
+                                                    <span>{proj.name} <span style={{ fontWeight: 400, color: '#666', fontStyle: 'italic', fontSize: '11px' }}>| {proj.technologies.join(', ')}</span></span>
+                                                    <span style={{ fontSize: '11px', fontWeight: 'bold' }}>{proj.year}</span>
+                                                </div>
+                                                <ul style={{ paddingLeft: '18px', margin: '4px 0 0', listStyleType: 'disc' }}>
+                                                    {proj.bullets?.map((b, i) => b?.trim() && <li key={i} style={{ marginBottom: '2px', fontSize: '10.5px' }}>{b}</li>)}
+                                                </ul>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+
+                                {/* Education */}
+                                {education.length > 0 && (
+                                    <div className={`p-4 rounded-lg transition-all mb-4 ${focusedSection === 'education' ? 'bg-purple-50 ring-2 ring-purple-200' : ''}`}>
+                                        <h2 style={previewHeading('Education')}>Education{layout === 'minimal' && <div className="flex-1 h-[1px] bg-gray-100" />}</h2>
+                                        {education.map(edu => (
+                                            <div key={edu.id} style={{ marginBottom: '10px' }}>
+                                                <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 800, fontSize: '13px', color: '#000' }}>
+                                                    <span>{edu.institution}</span><span style={{ fontSize: '11px', fontWeight: 'bold' }}>{edu.year}</span>
+                                                </div>
+                                                <div style={{ display: 'flex', justifyContent: 'space-between', fontStyle: 'italic', fontSize: '11px', color: '#333' }}>
+                                                    <span>{edu.degree} {edu.field && `in ${edu.field}`}</span>{edu.gpa && <span>GPA: {edu.gpa}</span>}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+
+                                {/* Skills & Certifications */}
+                                <div style={{ display: 'grid', gridTemplateColumns: layout === 'classic' || layout === 'minimal' ? '1fr' : '1fr 1fr', gap: '20px' }}>
+                                    {skills && (
+                                        <div className={`p-4 rounded-lg transition-all ${focusedSection === 'skills' ? 'bg-purple-50 ring-2 ring-purple-200' : ''}`}>
+                                            <h2 style={previewHeading('Skills')}>{layout === 'classic' ? 'Technical Skills' : 'Skills'}{layout === 'minimal' && <div className="flex-1 h-[1px] bg-gray-100" />}</h2>
+                                            {layout === 'classic' ? (
+                                                <div style={{ fontSize: '11px' }}>
+                                                    {skills.split(';').map((cat, idx) => {
+                                                        const parts = cat.split(':');
+                                                        if (parts.length < 2) return <p key={idx} style={{ marginBottom: '4px' }}>{cat}</p>;
+                                                        return <p key={idx} style={{ marginBottom: '4px' }}><strong style={{ color: '#000' }}>{parts[0].trim()}:</strong> {parts.slice(1).join(':').trim()}</p>;
+                                                    })}
+                                                </div>
+                                            ) : (
+                                                <p style={{ fontSize: '10.5px', lineHeight: 1.8, color: '#444' }}>{skills}</p>
+                                            )}
                                         </div>
                                     )}
-                                </React.Fragment>
-                            );
-                        })}
+                                    {certifications && (
+                                        <div className={`p-4 rounded-lg transition-all ${focusedSection === 'certifications' ? 'bg-purple-50 ring-2 ring-purple-200' : ''}`}>
+                                            <h2 style={previewHeading('Certs')}>{layout === 'classic' ? 'Certifications & Achievements' : 'Certifications'}{layout === 'minimal' && <div className="flex-1 h-[1px] bg-gray-100" />}</h2>
+                                            {layout === 'classic' ? (
+                                                <div style={{ fontSize: '11px' }}>{certifications.split('\n').map((c, i) => <p key={i} style={{ marginBottom: '4px' }}>{c}</p>)}</div>
+                                            ) : (
+                                                <p style={{ fontSize: '10.5px', lineHeight: 1.8, color: '#444' }}>{certifications}</p>
+                                            )}
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                {/* Editor Steps */}
-                <div className="flex-1 overflow-y-auto custom-scrollbar pr-2 space-y-4">
-                    <AnimatePresence mode="wait">
-                        <motion.div key={currentStep} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }}
-                            transition={{ duration: 0.3 }} className="space-y-4 pb-24">
-
-                            {/* Step 1: Profile */}
-                            {currentStep === 1 && (
-                                <div className="glass-card p-5 space-y-5">
-                                    <SectionHeader title="Professional Persona" icon={User} sub="Upload an existing resume or fill in your details" />
-                                    <div className={`border-2 border-dashed rounded-2xl p-6 text-center transition-all cursor-pointer ${dragOver ? 'border-purple-500 bg-purple-500/10' : 'border-white/10 hover:border-purple-500/40 hover:bg-purple-500/5'}`}
-                                        onClick={() => fileInputRef.current?.click()}
-                                        onDragOver={e => { e.preventDefault(); setDragOver(true); }}
-                                        onDragLeave={() => setDragOver(false)}
-                                        onDrop={async e => { e.preventDefault(); setDragOver(false); const f = e.dataTransfer.files[0]; if (f) await handleFileUpload(f); }}>
-                                        <input ref={fileInputRef} type="file" accept=".pdf,.txt,.text" className="hidden"
-                                            onChange={async e => { const f = e.target.files?.[0]; if (f) await handleFileUpload(f); e.target.value = ''; }} />
-                                        {uploadingFile ? (
-                                            <div className="flex flex-col items-center gap-2"><Loader2 className="w-7 h-7 text-purple-400 animate-spin" /><p className="text-sm font-bold text-purple-400">Extracting text...</p></div>
-                                        ) : (
-                                            <div className="flex flex-col items-center gap-2"><Upload className="w-7 h-7 text-gray-500" /><p className="text-sm font-bold text-gray-400">Drop your resume here or click to browse</p><p className="text-[10px] font-bold text-gray-600 uppercase tracking-widest">PDF & TXT</p></div>
+                {/* â”€â”€ EDITOR (RIGHT) â”€â”€ */}
+                <div className="flex flex-col h-full overflow-hidden order-1 lg:order-2">
+                    {/* Progress Stepper */}
+                    <div className="relative mb-5 px-1">
+                        <div className="flex items-center justify-between overflow-x-auto no-scrollbar pb-2">
+                            {STEPS.map((step, idx) => {
+                                const Icon = step.icon;
+                                const isActive = currentStep === step.id;
+                                const isCompleted = currentStep > step.id;
+                                return (
+                                    <React.Fragment key={step.id}>
+                                        <button onClick={() => setCurrentStep(step.id)}
+                                            className={`flex flex-col items-center gap-1.5 min-w-[60px] transition-all relative ${isActive ? 'opacity-100 scale-105' : 'opacity-40 hover:opacity-80'}`}>
+                                            <div className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-300 ${isActive ? 'bg-purple-600 text-white shadow-lg shadow-purple-500/30' : isCompleted ? 'bg-green-500/20 text-green-400 border border-green-500/30' : 'bg-white/5 text-gray-500 border border-white/5'}`}>
+                                                <Icon className="w-4 h-4" />
+                                            </div>
+                                            <span className={`text-[9px] font-black uppercase tracking-tight whitespace-nowrap ${isActive ? 'text-purple-400' : 'text-gray-600'}`}>{step.label}</span>
+                                        </button>
+                                        {idx < STEPS.length - 1 && (
+                                            <div className="flex-1 h-[2px] min-w-[12px] mx-1 bg-white/5 self-center mb-5 relative overflow-hidden">
+                                                <motion.div initial={{ width: "0%" }} animate={{ width: isCompleted ? "100%" : "0%" }}
+                                                    className="absolute inset-0 bg-gradient-to-r from-purple-600 to-indigo-500" />
+                                            </div>
                                         )}
-                                    </div>
-                                    <div className="grid grid-cols-2 gap-4" onFocus={() => setFocusedSection('contact')} onBlur={() => setFocusedSection(null)}>
-                                        <Field label="Full Name" span><input className={inputCls} placeholder="Alex Rivera" value={contact.fullName} onChange={e => updateContact('fullName', e.target.value)} /></Field>
-                                        <Field label="Email"><input className={inputCls} placeholder="alex@example.com" value={contact.email} onChange={e => updateContact('email', e.target.value)} /></Field>
-                                        <Field label="Phone"><input className={inputCls} placeholder="+1 234 567 890" value={contact.phone} onChange={e => updateContact('phone', e.target.value)} /></Field>
-                                        <Field label="Location"><input className={inputCls} placeholder="City, Country" value={contact.location} onChange={e => updateContact('location', e.target.value)} /></Field>
-                                        <Field label="LinkedIn (optional)"><input className={inputCls} placeholder="linkedin.com/in/..." value={contact.linkedin} onChange={e => updateContact('linkedin', e.target.value)} /></Field>
-                                        <Field label="GitHub / Portfolio" span><input className={inputCls} placeholder="github.com/..." value={contact.github} onChange={e => updateContact('github', e.target.value)} /></Field>
-                                    </div>
-                                </div>
-                            )}
+                                    </React.Fragment>
+                                );
+                            })}
+                        </div>
+                    </div>
 
-                            {/* Step 2: Summary */}
-                            {currentStep === 2 && (
-                                <div className="glass-card p-5">
-                                    <SectionHeader title="Career Summary" icon={Sparkles} sub="Your elevator pitch for recruiters" onGenerate={() => generateSection('summary')} loading={loadingSection === 'summary'} />
-                                    <div className="relative mt-4">
-                                        <textarea className={textareaCls} value={summary} onChange={e => setSummary(e.target.value.slice(0, 1000))}
-                                            onFocus={() => setFocusedSection('summary')} onBlur={() => setFocusedSection(null)}
-                                            placeholder="Highly motivated software engineer with 5+ years of experience..." />
-                                        <span className={`absolute bottom-3 right-3 text-[10px] font-bold px-2 py-0.5 rounded-md bg-black/40 ${summary.length > 900 ? 'text-red-400' : 'text-gray-500'}`}>{summary.length}/1000</span>
-                                    </div>
-                                </div>
-                            )}
+                    {/* Editor Steps */}
+                    <div className="flex-1 overflow-y-auto custom-scrollbar pr-2 space-y-4">
+                        <AnimatePresence mode="wait">
+                            <motion.div key={currentStep} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }}
+                                transition={{ duration: 0.3 }} className="space-y-4 pb-24">
 
-                            {/* Step 3: Experience */}
-                            {currentStep === 3 && (
-                                <div className="space-y-4">
-                                    <div className="glass-card p-5 sticky top-0 z-20 backdrop-blur-xl">
-                                        <SectionHeader title="Work History" icon={Briefcase} sub="Reverse chronological order" onGenerate={() => generateSection('experience')} loading={loadingSection === 'experience'} />
+                                {/* Step 1: Profile */}
+                                {currentStep === 1 && (
+                                    <div className="glass-card p-5 space-y-5">
+                                        <SectionHeader title="Professional Persona" icon={User} sub="Upload an existing resume or fill in your details" />
+                                        <div className={`border-2 border-dashed rounded-2xl p-6 text-center transition-all cursor-pointer ${dragOver ? 'border-purple-500 bg-purple-500/10' : 'border-white/10 hover:border-purple-500/40 hover:bg-purple-500/5'}`}
+                                            onClick={() => fileInputRef.current?.click()}
+                                            onDragOver={e => { e.preventDefault(); setDragOver(true); }}
+                                            onDragLeave={() => setDragOver(false)}
+                                            onDrop={async e => { e.preventDefault(); setDragOver(false); const f = e.dataTransfer.files[0]; if (f) await handleFileUpload(f); }}>
+                                            <input ref={fileInputRef} type="file" accept=".pdf,.txt,.text" className="hidden"
+                                                onChange={async e => { const f = e.target.files?.[0]; if (f) await handleFileUpload(f); e.target.value = ''; }} />
+                                            {uploadingFile ? (
+                                                <div className="flex flex-col items-center gap-2"><Loader2 className="w-7 h-7 text-purple-400 animate-spin" /><p className="text-sm font-bold text-purple-400">Extracting text...</p></div>
+                                            ) : (
+                                                <div className="flex flex-col items-center gap-2"><Upload className="w-7 h-7 text-gray-500" /><p className="text-sm font-bold text-gray-400">Drop your resume here or click to browse</p><p className="text-[10px] font-bold text-gray-600 uppercase tracking-widest">PDF & TXT</p></div>
+                                            )}
+                                        </div>
+                                        <div className="grid grid-cols-2 gap-4" onFocus={() => setFocusedSection('contact')} onBlur={() => setFocusedSection(null)}>
+                                            <Field label="Full Name" span><input className={inputCls} placeholder="Alex Rivera" value={contact.fullName} onChange={e => updateContact('fullName', e.target.value)} /></Field>
+                                            <Field label="Email"><input className={inputCls} placeholder="alex@example.com" value={contact.email} onChange={e => updateContact('email', e.target.value)} /></Field>
+                                            <Field label="Phone"><input className={inputCls} placeholder="+1 234 567 890" value={contact.phone} onChange={e => updateContact('phone', e.target.value)} /></Field>
+                                            <Field label="Location"><input className={inputCls} placeholder="City, Country" value={contact.location} onChange={e => updateContact('location', e.target.value)} /></Field>
+                                            <Field label="LinkedIn (optional)"><input className={inputCls} placeholder="linkedin.com/in/..." value={contact.linkedin} onChange={e => updateContact('linkedin', e.target.value)} /></Field>
+                                            <Field label="GitHub / Portfolio" span><input className={inputCls} placeholder="github.com/..." value={contact.github} onChange={e => updateContact('github', e.target.value)} /></Field>
+                                        </div>
                                     </div>
-                                    {experience.map(exp => (
-                                        <div key={exp.id} className="glass-card p-5 space-y-4 relative group hover:border-purple-500/20 transition-all"
-                                            onFocus={() => setFocusedSection('experience')} onBlur={() => setFocusedSection(null)}>
-                                            <ItemControls onUp={() => moveItem(experience, setExperience, exp.id, 'up')} onDown={() => moveItem(experience, setExperience, exp.id, 'down')} onDelete={() => removeExperience(exp.id)} />
-                                            <div className="grid grid-cols-2 gap-4">
-                                                <Field label="Job Title"><input className={inputCls} placeholder="Senior Frontend Engineer" value={exp.title} onChange={e => updateExperience(exp.id, 'title', e.target.value)} /></Field>
-                                                <Field label="Company"><input className={inputCls} placeholder="Google" value={exp.company} onChange={e => updateExperience(exp.id, 'company', e.target.value)} /></Field>
-                                                <Field label="Location"><input className={inputCls} placeholder="Mountain View, CA" value={exp.location} onChange={e => updateExperience(exp.id, 'location', e.target.value)} /></Field>
-                                                <div className="grid grid-cols-2 gap-2">
-                                                    <Field label="Start"><input className={`${inputCls} text-center text-xs`} placeholder="Jan 2020" value={exp.startDate} onChange={e => updateExperience(exp.id, 'startDate', e.target.value)} /></Field>
-                                                    <Field label="End"><input className={`${inputCls} text-center text-xs`} placeholder="Present" value={exp.endDate} onChange={e => updateExperience(exp.id, 'endDate', e.target.value)} /></Field>
+                                )}
+
+                                {/* Step 2: Summary */}
+                                {currentStep === 2 && (
+                                    <div className="glass-card p-5">
+                                        <SectionHeader title="Career Summary" icon={Sparkles} sub="Your elevator pitch for recruiters" onGenerate={() => generateSection('summary')} loading={loadingSection === 'summary'} />
+                                        <div className="relative mt-4">
+                                            <textarea className={textareaCls} value={summary} onChange={e => setSummary(e.target.value.slice(0, 1000))}
+                                                onFocus={() => setFocusedSection('summary')} onBlur={() => setFocusedSection(null)}
+                                                placeholder="Highly motivated software engineer with 5+ years of experience..." />
+                                            <span className={`absolute bottom-3 right-3 text-[10px] font-bold px-2 py-0.5 rounded-md bg-black/40 ${summary.length > 900 ? 'text-red-400' : 'text-gray-500'}`}>{summary.length}/1000</span>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* Step 3: Experience */}
+                                {currentStep === 3 && (
+                                    <div className="space-y-4">
+                                        <div className="glass-card p-5 sticky top-0 z-20 backdrop-blur-xl">
+                                            <SectionHeader title="Work History" icon={Briefcase} sub="Reverse chronological order" onGenerate={() => generateSection('experience')} loading={loadingSection === 'experience'} />
+                                        </div>
+                                        {experience.map(exp => (
+                                            <div key={exp.id} className="glass-card p-5 space-y-4 relative group hover:border-purple-500/20 transition-all"
+                                                onFocus={() => setFocusedSection('experience')} onBlur={() => setFocusedSection(null)}>
+                                                <ItemControls onUp={() => moveItem(experience, setExperience, exp.id, 'up')} onDown={() => moveItem(experience, setExperience, exp.id, 'down')} onDelete={() => removeExperience(exp.id)} />
+                                                <div className="grid grid-cols-2 gap-4">
+                                                    <Field label="Job Title"><input className={inputCls} placeholder="Senior Frontend Engineer" value={exp.title} onChange={e => updateExperience(exp.id, 'title', e.target.value)} /></Field>
+                                                    <Field label="Company"><input className={inputCls} placeholder="Google" value={exp.company} onChange={e => updateExperience(exp.id, 'company', e.target.value)} /></Field>
+                                                    <Field label="Location"><input className={inputCls} placeholder="Mountain View, CA" value={exp.location} onChange={e => updateExperience(exp.id, 'location', e.target.value)} /></Field>
+                                                    <div className="grid grid-cols-2 gap-2">
+                                                        <Field label="Start"><input className={`${inputCls} text-center text-xs`} placeholder="Jan 2020" value={exp.startDate} onChange={e => updateExperience(exp.id, 'startDate', e.target.value)} /></Field>
+                                                        <Field label="End"><input className={`${inputCls} text-center text-xs`} placeholder="Present" value={exp.endDate} onChange={e => updateExperience(exp.id, 'endDate', e.target.value)} /></Field>
+                                                    </div>
+                                                </div>
+                                                <Field label="Achievements & Responsibilities">
+                                                    <textarea className={`${inputCls} min-h-[120px] leading-relaxed resize-none`} placeholder="â€¢ Developed scalable UI components using React..."
+                                                        value={exp.bullets.join('\n')} onChange={e => updateExperience(exp.id, 'bullets', e.target.value.split('\n'))} />
+                                                </Field>
+                                            </div>
+                                        ))}
+                                        <button onClick={addExperience} className="w-full py-4 border-2 border-dashed border-white/10 rounded-2xl text-sm font-bold text-gray-500 hover:border-purple-500 hover:text-purple-400 hover:bg-purple-500/5 transition-all flex items-center justify-center gap-2">
+                                            <Plus className="w-4 h-4" /> Add Experience
+                                        </button>
+                                    </div>
+                                )}
+
+                                {/* Step 4: Education */}
+                                {currentStep === 4 && (
+                                    <div className="space-y-4">
+                                        <div className="glass-card p-5">
+                                            <SectionHeader title="Education" icon={GraduationCap} sub="Degrees and certifications" onGenerate={() => generateSection('education')} loading={loadingSection === 'education'} />
+                                        </div>
+                                        {education.map(edu => (
+                                            <div key={edu.id} className="glass-card p-5 space-y-4 relative group hover:border-purple-500/20 transition-all"
+                                                onFocus={() => setFocusedSection('education')} onBlur={() => setFocusedSection(null)}>
+                                                <ItemControls onUp={() => moveItem(education, setEducation, edu.id, 'up')} onDown={() => moveItem(education, setEducation, edu.id, 'down')} onDelete={() => removeEducation(edu.id)} />
+                                                <div className="grid grid-cols-2 gap-4">
+                                                    <Field label="Degree"><input className={inputCls} placeholder="Master of Computer Science" value={edu.degree} onChange={e => updateEducation(edu.id, 'degree', e.target.value)} /></Field>
+                                                    <Field label="Institution"><input className={inputCls} placeholder="Stanford University" value={edu.institution} onChange={e => updateEducation(edu.id, 'institution', e.target.value)} /></Field>
+                                                    <Field label="Field of Study"><input className={inputCls} placeholder="Artificial Intelligence" value={edu.field} onChange={e => updateEducation(edu.id, 'field', e.target.value)} /></Field>
+                                                    <div className="grid grid-cols-2 gap-2">
+                                                        <Field label="Year"><input className={`${inputCls} text-center text-xs`} placeholder="2022" value={edu.year} onChange={e => updateEducation(edu.id, 'year', e.target.value)} /></Field>
+                                                        <Field label="GPA"><input className={`${inputCls} text-center text-xs`} placeholder="3.9/4.0" value={edu.gpa || ''} onChange={e => updateEducation(edu.id, 'gpa', e.target.value)} /></Field>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <Field label="Achievements & Responsibilities">
-                                                <textarea className={`${inputCls} min-h-[120px] leading-relaxed resize-none`} placeholder="â€¢ Developed scalable UI components using React..."
-                                                    value={exp.bullets.join('\n')} onChange={e => updateExperience(exp.id, 'bullets', e.target.value.split('\n'))} />
-                                            </Field>
-                                        </div>
-                                    ))}
-                                    <button onClick={addExperience} className="w-full py-4 border-2 border-dashed border-white/10 rounded-2xl text-sm font-bold text-gray-500 hover:border-purple-500 hover:text-purple-400 hover:bg-purple-500/5 transition-all flex items-center justify-center gap-2">
-                                        <Plus className="w-4 h-4" /> Add Experience
-                                    </button>
-                                </div>
-                            )}
-
-                            {/* Step 4: Education */}
-                            {currentStep === 4 && (
-                                <div className="space-y-4">
-                                    <div className="glass-card p-5">
-                                        <SectionHeader title="Education" icon={GraduationCap} sub="Degrees and certifications" onGenerate={() => generateSection('education')} loading={loadingSection === 'education'} />
+                                        ))}
+                                        <button onClick={addEducation} className="w-full py-4 border-2 border-dashed border-white/10 rounded-2xl text-sm font-bold text-gray-500 hover:border-purple-500 hover:text-purple-400 hover:bg-purple-500/5 transition-all flex items-center justify-center gap-2">
+                                            <Plus className="w-4 h-4" /> Add Education
+                                        </button>
                                     </div>
-                                    {education.map(edu => (
-                                        <div key={edu.id} className="glass-card p-5 space-y-4 relative group hover:border-purple-500/20 transition-all"
-                                            onFocus={() => setFocusedSection('education')} onBlur={() => setFocusedSection(null)}>
-                                            <ItemControls onUp={() => moveItem(education, setEducation, edu.id, 'up')} onDown={() => moveItem(education, setEducation, edu.id, 'down')} onDelete={() => removeEducation(edu.id)} />
-                                            <div className="grid grid-cols-2 gap-4">
-                                                <Field label="Degree"><input className={inputCls} placeholder="Master of Computer Science" value={edu.degree} onChange={e => updateEducation(edu.id, 'degree', e.target.value)} /></Field>
-                                                <Field label="Institution"><input className={inputCls} placeholder="Stanford University" value={edu.institution} onChange={e => updateEducation(edu.id, 'institution', e.target.value)} /></Field>
-                                                <Field label="Field of Study"><input className={inputCls} placeholder="Artificial Intelligence" value={edu.field} onChange={e => updateEducation(edu.id, 'field', e.target.value)} /></Field>
-                                                <div className="grid grid-cols-2 gap-2">
-                                                    <Field label="Year"><input className={`${inputCls} text-center text-xs`} placeholder="2022" value={edu.year} onChange={e => updateEducation(edu.id, 'year', e.target.value)} /></Field>
-                                                    <Field label="GPA"><input className={`${inputCls} text-center text-xs`} placeholder="3.9/4.0" value={edu.gpa || ''} onChange={e => updateEducation(edu.id, 'gpa', e.target.value)} /></Field>
+                                )}
+
+                                {/* Step 5: Skills & Certs */}
+                                {currentStep === 5 && (
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div className="glass-card p-5 space-y-3">
+                                            <SectionHeader title="Technical Skills" icon={Code} sub="Group by category" onGenerate={() => generateSection('skills')} loading={loadingSection === 'skills'} />
+                                            <textarea className={textareaCls} value={skills} onChange={e => setSkills(e.target.value)} onFocus={() => setFocusedSection('skills')} onBlur={() => setFocusedSection(null)}
+                                                placeholder="Languages: JavaScript, TypeScript, Python; Frameworks: React, Next.js" />
+                                            <p className="text-[9px] text-gray-600 italic">Format: "Category: Skill 1, Skill 2; Category 2: ..."</p>
+                                        </div>
+                                        <div className="glass-card p-5 space-y-3">
+                                            <SectionHeader title="Certifications" icon={Award} sub="Awards and credentials" onGenerate={() => generateSection('certifications')} loading={loadingSection === 'certifications'} />
+                                            <textarea className={textareaCls} value={certifications} onChange={e => setCertifications(e.target.value)} onFocus={() => setFocusedSection('certifications')} onBlur={() => setFocusedSection(null)}
+                                                placeholder={"AWS Solutions Architect (2023)\nGoogle Cloud Developer (2022)"} />
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* Step 6: Projects */}
+                                {currentStep === 6 && (
+                                    <div className="space-y-4">
+                                        <div className="glass-card p-5">
+                                            <SectionHeader title="Portfolio Projects" icon={Code} sub="Showcase engineering feats" onGenerate={() => generateSection('projects')} loading={loadingSection === 'projects'} />
+                                        </div>
+                                        {projects.map((proj, idx) => (
+                                            <div key={proj.id || idx} className="glass-card p-5 space-y-4 relative group hover:border-purple-500/20 transition-all">
+                                                <ItemControls onUp={() => moveItem(projects, setProjects, proj.id, 'up')} onDown={() => moveItem(projects, setProjects, proj.id, 'down')}
+                                                    onDelete={() => setProjects(projects.filter((_, i) => i !== idx))} />
+                                                <div className="grid grid-cols-2 gap-4">
+                                                    <Field label="Project Name"><input className={inputCls} placeholder="AI-Powered CRM" value={proj.name} onChange={e => { const p = [...projects]; p[idx].name = e.target.value; setProjects(p); }} /></Field>
+                                                    <Field label="Year"><input className={inputCls} placeholder="2023" value={proj.year} onChange={e => { const p = [...projects]; p[idx].year = e.target.value; setProjects(p); }} /></Field>
+                                                    <Field label="Technologies (comma separated)" span><input className={inputCls} placeholder="React, Node.js, TensorFlow" value={proj.technologies.join(', ')} onChange={e => { const p = [...projects]; p[idx].technologies = e.target.value.split(',').map(s => s.trim()); setProjects(p); }} /></Field>
+                                                </div>
+                                                <Field label="Key Features & Metrics">
+                                                    <textarea className={`${inputCls} min-h-[100px] leading-relaxed resize-none`} placeholder="â€¢ Optimized database queries by 40%..."
+                                                        value={proj.bullets?.join('\n') || ''} onChange={e => { const p = [...projects]; p[idx].bullets = e.target.value.split('\n'); setProjects(p); }} />
+                                                </Field>
+                                            </div>
+                                        ))}
+                                        <button onClick={() => setProjects([...projects, { id: Date.now().toString(), name: '', description: '', technologies: [], year: '', bullets: [] }])}
+                                            className="w-full py-4 border-2 border-dashed border-white/10 rounded-2xl text-sm font-bold text-gray-500 hover:border-purple-500 hover:text-purple-400 hover:bg-purple-500/5 transition-all flex items-center justify-center gap-2">
+                                            <Plus className="w-4 h-4" /> Add Project
+                                        </button>
+                                    </div>
+                                )}
+
+                                {/* Step 7: Finalize */}
+                                {currentStep === 7 && (
+                                    <div className="space-y-5">
+                                        <div className="glass-card p-6 space-y-6">
+                                            <SectionHeader title="Final Polish" icon={Sparkles} sub="Fine-tune your presentation" />
+                                            <div className="space-y-3">
+                                                <label className="text-xs font-bold uppercase tracking-widest text-gray-500">Tone</label>
+                                                <div className="grid grid-cols-2 gap-3">
+                                                    {TONES.map(t => (
+                                                        <button key={t.value} onClick={() => setTone(t.value as ResumeTone)}
+                                                            className={`p-4 rounded-xl border-2 text-left transition-all ${tone === t.value ? 'border-purple-500 bg-purple-500/5' : 'border-white/5 hover:border-white/15'}`}>
+                                                            <p className={`font-bold text-sm ${tone === t.value ? 'text-purple-400' : 'text-gray-300'}`}>{t.label}</p>
+                                                            <p className="text-[10px] text-gray-500 mt-0.5">{t.desc}</p>
+                                                        </button>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                            <div className="space-y-3">
+                                                <label className="text-xs font-bold uppercase tracking-widest text-gray-500">Layout</label>
+                                                <div className="grid grid-cols-2 gap-3">
+                                                    {LAYOUTS.map(l => (
+                                                        <button key={l.value} onClick={() => setLayout(l.value)}
+                                                            className={`p-4 rounded-xl border-2 text-left transition-all ${layout === l.value ? 'border-purple-500 bg-purple-500/5' : 'border-white/5 hover:border-white/15'}`}>
+                                                            <p className={`font-bold text-sm ${layout === l.value ? 'text-purple-400' : 'text-gray-300'}`}>{l.label}</p>
+                                                            <p className="text-[10px] text-gray-500 mt-0.5">{l.desc}</p>
+                                                        </button>
+                                                    ))}
                                                 </div>
                                             </div>
                                         </div>
-                                    ))}
-                                    <button onClick={addEducation} className="w-full py-4 border-2 border-dashed border-white/10 rounded-2xl text-sm font-bold text-gray-500 hover:border-purple-500 hover:text-purple-400 hover:bg-purple-500/5 transition-all flex items-center justify-center gap-2">
-                                        <Plus className="w-4 h-4" /> Add Education
-                                    </button>
-                                </div>
-                            )}
-
-                            {/* Step 5: Skills & Certs */}
-                            {currentStep === 5 && (
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div className="glass-card p-5 space-y-3">
-                                        <SectionHeader title="Technical Skills" icon={Code} sub="Group by category" onGenerate={() => generateSection('skills')} loading={loadingSection === 'skills'} />
-                                        <textarea className={textareaCls} value={skills} onChange={e => setSkills(e.target.value)} onFocus={() => setFocusedSection('skills')} onBlur={() => setFocusedSection(null)}
-                                            placeholder="Languages: JavaScript, TypeScript, Python; Frameworks: React, Next.js" />
-                                        <p className="text-[9px] text-gray-600 italic">Format: "Category: Skill 1, Skill 2; Category 2: ..."</p>
-                                    </div>
-                                    <div className="glass-card p-5 space-y-3">
-                                        <SectionHeader title="Certifications" icon={Award} sub="Awards and credentials" onGenerate={() => generateSection('certifications')} loading={loadingSection === 'certifications'} />
-                                        <textarea className={textareaCls} value={certifications} onChange={e => setCertifications(e.target.value)} onFocus={() => setFocusedSection('certifications')} onBlur={() => setFocusedSection(null)}
-                                            placeholder={"AWS Solutions Architect (2023)\nGoogle Cloud Developer (2022)"} />
-                                    </div>
-                                </div>
-                            )}
-
-                            {/* Step 6: Projects */}
-                            {currentStep === 6 && (
-                                <div className="space-y-4">
-                                    <div className="glass-card p-5">
-                                        <SectionHeader title="Portfolio Projects" icon={Code} sub="Showcase engineering feats" onGenerate={() => generateSection('projects')} loading={loadingSection === 'projects'} />
-                                    </div>
-                                    {projects.map((proj, idx) => (
-                                        <div key={proj.id || idx} className="glass-card p-5 space-y-4 relative group hover:border-purple-500/20 transition-all">
-                                            <ItemControls onUp={() => moveItem(projects, setProjects, proj.id, 'up')} onDown={() => moveItem(projects, setProjects, proj.id, 'down')}
-                                                onDelete={() => setProjects(projects.filter((_, i) => i !== idx))} />
-                                            <div className="grid grid-cols-2 gap-4">
-                                                <Field label="Project Name"><input className={inputCls} placeholder="AI-Powered CRM" value={proj.name} onChange={e => { const p = [...projects]; p[idx].name = e.target.value; setProjects(p); }} /></Field>
-                                                <Field label="Year"><input className={inputCls} placeholder="2023" value={proj.year} onChange={e => { const p = [...projects]; p[idx].year = e.target.value; setProjects(p); }} /></Field>
-                                                <Field label="Technologies (comma separated)" span><input className={inputCls} placeholder="React, Node.js, TensorFlow" value={proj.technologies.join(', ')} onChange={e => { const p = [...projects]; p[idx].technologies = e.target.value.split(',').map(s => s.trim()); setProjects(p); }} /></Field>
-                                            </div>
-                                            <Field label="Key Features & Metrics">
-                                                <textarea className={`${inputCls} min-h-[100px] leading-relaxed resize-none`} placeholder="â€¢ Optimized database queries by 40%..."
-                                                    value={proj.bullets?.join('\n') || ''} onChange={e => { const p = [...projects]; p[idx].bullets = e.target.value.split('\n'); setProjects(p); }} />
-                                            </Field>
-                                        </div>
-                                    ))}
-                                    <button onClick={() => setProjects([...projects, { id: Date.now().toString(), name: '', description: '', technologies: [], year: '', bullets: [] }])}
-                                        className="w-full py-4 border-2 border-dashed border-white/10 rounded-2xl text-sm font-bold text-gray-500 hover:border-purple-500 hover:text-purple-400 hover:bg-purple-500/5 transition-all flex items-center justify-center gap-2">
-                                        <Plus className="w-4 h-4" /> Add Project
-                                    </button>
-                                </div>
-                            )}
-
-                            {/* Step 7: Finalize */}
-                            {currentStep === 7 && (
-                                <div className="space-y-5">
-                                    <div className="glass-card p-6 space-y-6">
-                                        <SectionHeader title="Final Polish" icon={Sparkles} sub="Fine-tune your presentation" />
-                                        <div className="space-y-3">
-                                            <label className="text-xs font-bold uppercase tracking-widest text-gray-500">Tone</label>
-                                            <div className="grid grid-cols-2 gap-3">
-                                                {TONES.map(t => (
-                                                    <button key={t.value} onClick={() => setTone(t.value as ResumeTone)}
-                                                        className={`p-4 rounded-xl border-2 text-left transition-all ${tone === t.value ? 'border-purple-500 bg-purple-500/5' : 'border-white/5 hover:border-white/15'}`}>
-                                                        <p className={`font-bold text-sm ${tone === t.value ? 'text-purple-400' : 'text-gray-300'}`}>{t.label}</p>
-                                                        <p className="text-[10px] text-gray-500 mt-0.5">{t.desc}</p>
-                                                    </button>
-                                                ))}
-                                            </div>
-                                        </div>
-                                        <div className="space-y-3">
-                                            <label className="text-xs font-bold uppercase tracking-widest text-gray-500">Layout</label>
-                                            <div className="grid grid-cols-2 gap-3">
-                                                {LAYOUTS.map(l => (
-                                                    <button key={l.value} onClick={() => setLayout(l.value)}
-                                                        className={`p-4 rounded-xl border-2 text-left transition-all ${layout === l.value ? 'border-purple-500 bg-purple-500/5' : 'border-white/5 hover:border-white/15'}`}>
-                                                        <p className={`font-bold text-sm ${layout === l.value ? 'text-purple-400' : 'text-gray-300'}`}>{l.label}</p>
-                                                        <p className="text-[10px] text-gray-500 mt-0.5">{l.desc}</p>
-                                                    </button>
-                                                ))}
+                                        <div className="glass-card p-6 border-purple-500/20 bg-purple-500/5">
+                                            <div className="flex items-center gap-4">
+                                                <div className="w-16 h-16 rounded-full border-2 border-white/10 flex items-center justify-center relative shrink-0">
+                                                    <svg width="56" height="56" viewBox="0 0 44 44">
+                                                        <circle cx="22" cy="22" r="18" fill="none" stroke="currentColor" strokeWidth="2" className="text-white/5" />
+                                                        <motion.circle cx="22" cy="22" r="18" fill="none" strokeWidth="3" strokeLinecap="round" className={scoreBg}
+                                                            initial={{ strokeDasharray: "0 113" }} animate={{ strokeDasharray: `${(atsScore / 100) * 113} 113` }} transition={{ duration: 1.5 }} />
+                                                    </svg>
+                                                    <span className={`absolute font-display font-black text-lg ${scoreColor}`}>{atsScore || '0'}</span>
+                                                </div>
+                                                <div className="flex-1">
+                                                    <h4 className="font-display font-bold text-purple-400">ATS Success Score</h4>
+                                                    <p className="text-xs text-gray-400 mt-1">
+                                                        {atsScore >= 80 ? 'ðŸ”¥ Exceptional! Your resume is enterprise-ready.' :
+                                                            atsScore >= 60 ? 'âš¡ Solid, aim for 80+ for maximum visibility.' :
+                                                                'ðŸš¨ Needs optimization. Use AI Generate for keywords.'}
+                                                    </p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="glass-card p-6 border-purple-500/20 bg-purple-500/5">
-                                        <div className="flex items-center gap-4">
-                                            <div className="w-16 h-16 rounded-full border-2 border-white/10 flex items-center justify-center relative shrink-0">
-                                                <svg width="56" height="56" viewBox="0 0 44 44">
-                                                    <circle cx="22" cy="22" r="18" fill="none" stroke="currentColor" strokeWidth="2" className="text-white/5" />
-                                                    <motion.circle cx="22" cy="22" r="18" fill="none" strokeWidth="3" strokeLinecap="round" className={scoreBg}
-                                                        initial={{ strokeDasharray: "0 113" }} animate={{ strokeDasharray: `${(atsScore / 100) * 113} 113` }} transition={{ duration: 1.5 }} />
-                                                </svg>
-                                                <span className={`absolute font-display font-black text-lg ${scoreColor}`}>{atsScore || '0'}</span>
-                                            </div>
-                                            <div className="flex-1">
-                                                <h4 className="font-display font-bold text-purple-400">ATS Success Score</h4>
-                                                <p className="text-xs text-gray-400 mt-1">
-                                                    {atsScore >= 80 ? 'ðŸ”¥ Exceptional! Your resume is enterprise-ready.' :
-                                                        atsScore >= 60 ? 'âš¡ Solid, aim for 80+ for maximum visibility.' :
-                                                            'ðŸš¨ Needs optimization. Use AI Generate for keywords.'}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
-                        </motion.div>
-                    </AnimatePresence>
+                                )}
+                            </motion.div>
+                        </AnimatePresence>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        {/* â”€â”€ Floating Navigation â”€â”€ */}
-        <div className="fixed bottom-8 left-1/2 md:left-[60%] lg:left-[70%] -translate-x-1/2 z-50 pointer-events-none w-max">
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-                className="glass-card flex items-center gap-2 p-2.5 !rounded-2xl shadow-2xl shadow-purple-500/10 border-purple-500/20 backdrop-blur-3xl pointer-events-auto">
-                <button onClick={() => setCurrentStep(Math.max(1, currentStep - 1))} disabled={currentStep === 1}
-                    className={`flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${currentStep === 1 ? 'opacity-0 pointer-events-none' : 'text-gray-300 hover:text-white hover:bg-white/5 border border-white/5'}`}>
-                    <ChevronDown className="w-3.5 h-3.5 rotate-90" /> Back
-                </button>
-                <div className="flex items-center px-4 h-10 border-l border-r border-white/5 mx-1">
-                    <span className="text-[10px] font-black text-gray-500 uppercase tracking-wider whitespace-nowrap">{currentStep} <span className="text-white/10 mx-1">/</span> {STEPS.length}</span>
-                </div>
-                {currentStep < STEPS.length ? (
-                    <button onClick={() => setCurrentStep(currentStep + 1)}
-                        className="flex items-center gap-1.5 px-5 py-2.5 rounded-xl text-xs font-bold bg-purple-600 hover:bg-purple-500 text-white transition-all shadow-lg shadow-purple-500/20 group">
-                        Continue <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+            {/* â”€â”€ Floating Navigation â”€â”€ */}
+            <div className="fixed bottom-8 left-1/2 md:left-[60%] lg:left-[70%] -translate-x-1/2 z-50 pointer-events-none w-max">
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+                    className="glass-card flex items-center gap-2 p-2.5 !rounded-2xl shadow-2xl shadow-purple-500/10 border-purple-500/20 backdrop-blur-3xl pointer-events-auto">
+                    <button onClick={() => setCurrentStep(Math.max(1, currentStep - 1))} disabled={currentStep === 1}
+                        className={`flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${currentStep === 1 ? 'opacity-0 pointer-events-none' : 'text-gray-300 hover:text-white hover:bg-white/5 border border-white/5'}`}>
+                        <ChevronDown className="w-3.5 h-3.5 rotate-90" /> Back
                     </button>
-                ) : (
-                    <button onClick={saveResume} disabled={saving}
-                        className="flex items-center gap-1.5 px-5 py-2.5 rounded-xl text-xs font-bold bg-purple-600 hover:bg-purple-500 text-white transition-all shadow-lg shadow-purple-500/20">
-                        {saving ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Save className="w-3.5 h-3.5" />} Save Resume
-                    </button>
-                )}
-            </motion.div>
-        </div>
-    </motion.div>
-);
+                    <div className="flex items-center px-4 h-10 border-l border-r border-white/5 mx-1">
+                        <span className="text-[10px] font-black text-gray-500 uppercase tracking-wider whitespace-nowrap">{currentStep} <span className="text-white/10 mx-1">/</span> {STEPS.length}</span>
+                    </div>
+                    {currentStep < STEPS.length ? (
+                        <button onClick={() => setCurrentStep(currentStep + 1)}
+                            className="flex items-center gap-1.5 px-5 py-2.5 rounded-xl text-xs font-bold bg-purple-600 hover:bg-purple-500 text-white transition-all shadow-lg shadow-purple-500/20 group">
+                            Continue <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                        </button>
+                    ) : (
+                        <button onClick={saveResume} disabled={saving}
+                            className="flex items-center gap-1.5 px-5 py-2.5 rounded-xl text-xs font-bold bg-purple-600 hover:bg-purple-500 text-white transition-all shadow-lg shadow-purple-500/20">
+                            {saving ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Save className="w-3.5 h-3.5" />} Save Resume
+                        </button>
+                    )}
+                </motion.div>
+            </div>
+        </motion.div>
+    );
 }
