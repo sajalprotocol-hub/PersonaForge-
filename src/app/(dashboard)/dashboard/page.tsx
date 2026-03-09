@@ -11,6 +11,7 @@ import {
 import { motion } from 'framer-motion';
 import { TiltCard } from '@/components/ui/TiltCard';
 import { WelcomeNudge } from '@/components/automation/WelcomeNudge';
+import { ReferralSystem } from '@/components/automation/ReferralSystem';
 
 const QUICK_ACTIONS = [
     { href: '/resume-builder', icon: FileText, title: 'Build Resume', desc: 'Create an AI-optimized resume', color: 'from-brand-500 to-brand-600' },
@@ -165,6 +166,35 @@ export default function DashboardPage() {
                         </motion.div>
                     ))}
                 </div>
+            </div>
+
+            {/* Rewards & Referrals */}
+            <div>
+                <h2 className="font-display font-black text-xs text-gray-500 uppercase tracking-[0.3em] mb-4 flex items-center gap-2">
+                    <span className="w-4 h-[1px] bg-white/10" />
+                    Rewards Program
+                </h2>
+                <motion.div variants={itemVariants}>
+                    <div className="glass-card p-0 overflow-hidden group border-purple-500/20 shadow-purple-glow-sm">
+                        <div className="p-8 flex flex-col md:flex-row items-center justify-between gap-8 relative overflow-hidden">
+                            <div className="absolute top-0 right-0 w-64 h-64 bg-purple-600/10 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2" />
+
+                            <div className="text-center md:text-left relative z-10 flex-1">
+                                <h3 className="text-2xl font-display font-black mb-2 flex items-center justify-center md:justify-start gap-3">
+                                    <Sparkles className="w-6 h-6 text-purple-400" />
+                                    The Elite Circle Rewards
+                                </h3>
+                                <p className="text-gray-400 font-medium max-w-xl">
+                                    Invite your network to PersonaForge. For every 3 successful referrals, you unlock **1 Month of Pro access** absolutely free. Reach 10 for **Lifetime access**.
+                                </p>
+                            </div>
+
+                            <div className="shrink-0 relative z-10">
+                                <ReferralSystem variant="button" />
+                            </div>
+                        </div>
+                    </div>
+                </motion.div>
             </div>
 
             {/* Subscription info */}

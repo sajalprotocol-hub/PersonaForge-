@@ -127,6 +127,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                         })}
                     </nav>
 
+                    {/* Referral Promo */}
+                    {sidebarOpen && <ReferralSystem variant="sidebar" />}
+
                     {/* User section */}
                     <div className="p-4 border-t border-white/5 bg-white/[0.02]">
                         <div className={`flex items-center gap-3 ${sidebarOpen ? 'px-4 py-2' : 'justify-center py-2'}`}>
@@ -201,6 +204,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                                         );
                                     })}
                                 </nav>
+                                <div className="px-4">
+                                    <ReferralSystem variant="sidebar" />
+                                </div>
                                 <div className="p-6 border-t border-white/5">
                                     <button onClick={handleSignOut} className="w-full flex items-center justify-center gap-3 py-4 rounded-xl text-red-400 bg-red-400/5 font-bold hover:bg-red-400/10 transition-colors">
                                         <LogOut className="w-5 h-5" />
@@ -223,7 +229,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                             <span className="nebula-text">{pathname.substring(1).replace('/', ' / ').replace('-', ' ') || 'Dashboard'}</span>
                         </div>
                         <div className="flex items-center gap-4">
-                            <ReferralSystem />
                             <Link href="/settings" className="flex items-center gap-3 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 transition-all group">
                                 <div className="w-8 h-8 rounded-lg bg-purple-600/20 flex items-center justify-center group-hover:bg-purple-600/40 transition-colors">
                                     <User className="w-4 h-4 text-purple-400 group-hover:text-white transition-colors" />

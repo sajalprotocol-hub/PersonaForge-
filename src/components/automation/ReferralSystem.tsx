@@ -8,12 +8,18 @@ import { db } from '@/lib/firebase';
 import { useAuth } from '@/context/AuthContext';
 import toast from 'react-hot-toast';
 
-export function ReferralSystem() {
+interface ReferralSystemProps {
+    variant?: 'button' | 'sidebar';
+}
+
+export function ReferralSystem({ variant = 'button' }: ReferralSystemProps) {
     const { user } = useAuth();
     const [isOpen, setIsOpen] = useState(false);
     const [referralCode, setReferralCode] = useState('');
     const [referralCount, setReferralCount] = useState(0);
     const [copied, setCopied] = useState(false);
+
+    // ... (rest of useEffect and handlers remain same)
 
     // Generate or fetch referral code
     useEffect(() => {
@@ -100,19 +106,45 @@ export function ReferralSystem() {
 
     return (
         <>
-            {/* Trigger Button */}
-            <button
-                onClick={() => setIsOpen(true)}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-purple-600/10 border border-purple-500/20 text-purple-400 text-sm font-bold hover:bg-purple-600/20 transition-all"
-            >
-                <Gift className="w-4 h-4" />
-                Refer & Earn
-                {referralCount > 0 && (
-                    <span className="px-2 py-0.5 rounded-full bg-purple-600 text-white text-[10px] font-black">
-                        {referralCount}
-                    </span>
-                )}
-            </button>
+            {/* Trigger Aspect */}
+            {variant === 'button' ? (
+                <button
+                    onClick={() => setIsOpen(true)}
+                    className="flex items-center gap-2 px-4 py-2 rounded-xl bg-purple-600/10 border border-purple-500/20 text-purple-400 text-sm font-bold hover:bg-purple-600/20 transition-all"
+                >
+                    <Gift className="w-4 h-4" />
+                    Refer & Earn
+                    {referralCount > 0 && (
+                        <span className="px-2 py-0.5 rounded-full bg-purple-600 text-white text-[10px] font-black">
+                            {referralCount}
+                        </span>
+                    )}
+                </button>
+            ) : (
+                <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => setIsOpen(true)}
+                    className="mx-4 mb-4 p-4 rounded-2xl bg-gradient-to-br from-purple-600/20 to-indigo-600/10 border border-purple-500/20 cursor-pointer group relative overflow-hidden"
+                >
+                    <div className="absolute top-0 right-0 w-20 h-20 bg-purple-500/10 blur-2xl rounded-full -translate-y-1/2 translate-x-1/2" />
+                    <div className="relative z-10">
+                        <div className="flex items-center gap-2 mb-2">
+                            <div className="w-8 h-8 rounded-lg bg-purple-600/20 flex items-center justify-center border border-purple-500/20">
+                                <Gift className="w-4 h-4 text-purple-400" />
+                            </div>
+                            <span className="text-xs font-black text-purple-400 uppercase tracking-widest">Rewards</span>
+                        </div>
+                        <h4 className="text-sm font-bold text-white mb-1">Refer & Earn Access</h4>
+                        <div className="flex items-center justify-between">
+                            <p className="text-[10px] text-gray-400 font-medium">Invite friends, get Pro.</p>
+                            {referralCount > 0 && (
+                                <span className="text-[10px] font-black text-purple-400">{referralCount} Refs</span>
+                            )}
+                        </div>
+                    </div>
+                </motion.div>
+            )}
 
             {/* Referral Modal */}
             <AnimatePresence>
@@ -244,14 +276,8 @@ export function ReferralSystem() {
     );
 }
 
-/**
- * Server-side helper: Track when a referred user signs up.
- * Call this from the signup API or auth flow.
- */
 export async function trackReferral(referralCode: string): Promise<boolean> {
     try {
-        // Find the referral doc by code (in a real app, use a query)
-        // For simplicity, we store a lookup in a separate collection
         const lookupDoc = doc(db, 'referral_codes', referralCode);
         const lookupSnap = await getDoc(lookupDoc);
 
